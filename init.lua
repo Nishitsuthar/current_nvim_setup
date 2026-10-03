@@ -92,10 +92,10 @@ local map = vim.keymap.set
 
 -- Force lualine to refresh when macro recording starts/stops
 vim.api.nvim_create_autocmd("RecordingEnter", {
-	callback = function() vim.opt.cmdheight = 1 end,
+	callback = function() vim.cmd("redrawstatus") end,
 })
 vim.api.nvim_create_autocmd("RecordingLeave", {
-	callback = function() vim.opt.cmdheight = 0 end,
+	callback = function() vim.cmd("redrawstatus") end,
 })
 
 -- The "Exit Insert Mode" hack
