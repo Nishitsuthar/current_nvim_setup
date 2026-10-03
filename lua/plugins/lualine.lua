@@ -20,7 +20,17 @@ return {
           lualine_a = {'mode'},
           lualine_b = {'branch', 'diff', 'diagnostics'},
           lualine_c = {'filename'},
-          lualine_x = { { function() return "⌘" end, color = { fg = "#cad3f5" } }, 'filetype'},
+          lualine_x = {
+            {
+              function()
+                local reg = vim.fn.reg_recording()
+                return reg ~= "" and "recording @" .. reg or ""
+              end,
+              color = { fg = "#ef9f76", bold = true },
+            },
+            { function() return "⌘" end, color = { fg = "#cad3f5" } },
+            'filetype',
+          },
           lualine_y = {'progress'},
           lualine_z = {
               { 'datetime', style = '%I:%M %p' },
