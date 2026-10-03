@@ -27,6 +27,7 @@ vim.opt.expandtab = true
 vim.opt.smartindent = true
 vim.opt.breakindent = true
 vim.opt.showmode = false
+vim.opt.shortmess:append("q")
 vim.opt.laststatus = 3
 vim.opt.cmdheight = 0
 vim.opt.linebreak = true
@@ -88,6 +89,14 @@ vim.api.nvim_create_autocmd({ "InsertLeave", "TextChanged" }, {
 -- 5. GLOBAL KEYMAPS
 -- ========================================================================== --
 local map = vim.keymap.set
+
+-- Force lualine to refresh when macro recording starts/stops
+vim.api.nvim_create_autocmd("RecordingEnter", {
+	callback = function() vim.opt.cmdheight = 1 end,
+})
+vim.api.nvim_create_autocmd("RecordingLeave", {
+	callback = function() vim.opt.cmdheight = 0 end,
+})
 
 -- The "Exit Insert Mode" hack
 map("i", "jk", "<Esc>", { desc = "Exit insert mode" })
