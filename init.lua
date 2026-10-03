@@ -1,6 +1,6 @@
 -- 1. BOOTSTRAP LAZY.NVIM
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
-if not vim.loop.fs_stat(lazypath) then
+if not vim.uv.fs_stat(lazypath) then
 	vim.fn.system({
 		"git",
 		"clone",
@@ -25,12 +25,20 @@ vim.opt.softtabstop = 4
 vim.opt.shiftwidth = 4
 vim.opt.expandtab = true
 vim.opt.smartindent = true
-vim.opt.autoindent = true
 vim.opt.breakindent = true
 vim.opt.showmode = false
-vim.opt.laststatus = 0
-vim.opt.cmdheight = 0
+vim.opt.laststatus = 3
+vim.opt.cmdheight = 1
 vim.opt.linebreak = true
+vim.opt.fillchars = {
+	vert      = "│",
+	horiz     = "─",
+	horizup   = "┴",
+	horizdown = "┬",
+	vertleft  = "┤",
+	vertright = "├",
+	verthoriz = "┼",
+}
 
 -- Shortcut for quitting
 vim.keymap.set("n", "<leader>q", ":qa<CR>", { desc = "Quit All" })
@@ -38,7 +46,7 @@ vim.keymap.set("n", "<leader>Q", ":qa!<CR>", { desc = "Discard All" })
 
 vim.keymap.set({ "n", "v" }, "<leader>mp", function()
 	require("conform").format({
-		lsp_fallback = true,
+		lsp_format = "fallback",
 		async = false,
 		timeout_ms = 500,
 	})
@@ -60,8 +68,6 @@ vim.api.nvim_create_autocmd("VimEnter", {
 			local target_dir = vim.fn.fnamemodify(first_arg, ":p")
 			vim.cmd.cd(target_dir)
 			vim.g.initial_cwd = target_dir
-		else
-			vim.g.initial_cwd = vim.fn.getcwd()
 		end
 	end,
 })
@@ -79,7 +85,7 @@ vim.api.nvim_create_autocmd({ "InsertLeave", "TextChanged" }, {
 })
 
 -- ========================================================================== --
--- 2. GLOBAL KEYMAPS
+-- 5. GLOBAL KEYMAPS
 -- ========================================================================== --
 local map = vim.keymap.set
 
