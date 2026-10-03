@@ -27,6 +27,7 @@ vim.opt.expandtab = true
 vim.opt.smartindent = true
 vim.opt.breakindent = true
 vim.opt.showmode = false
+vim.opt.shortmess:append("q")
 vim.opt.laststatus = 3
 vim.opt.cmdheight = 0
 vim.opt.linebreak = true
